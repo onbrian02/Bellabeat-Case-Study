@@ -33,6 +33,47 @@ FROM
   FitBit.weightLogInfo
 ;
 
+### Min/Max/Average Steps Grouped by Days ###
+  SELECT
+  EXTRACT(DAYOFWEEK FROM DATE(ActivityDate)) AS Day,
+  MIN(TotalSteps) AS MinSteps,
+  MAX(TotalSteps) AS MaxSteps,
+  AVG(TotalSteps) As AvgSteps,
+  CASE
+    WHEN EXTRACT(DAYOFWEEK FROM DATE(ActivityDate)) = 1 THEN "Sunday"
+    WHEN EXTRACT(DAYOFWEEK FROM DATE(ActivityDate)) = 2 THEN "Monday"
+    WHEN EXTRACT(DAYOFWEEK FROM DATE(ActivityDate)) = 3 THEN "Tuesday"
+    WHEN EXTRACT(DAYOFWEEK FROM DATE(ActivityDate)) = 4 THEN "Wednesday"
+    WHEN EXTRACT(DAYOFWEEK FROM DATE(ActivityDate)) = 5 THEN "Thursday"
+    WHEN EXTRACT(DAYOFWEEK FROM DATE(ActivityDate)) = 6 THEN "Friday"
+    WHEN EXTRACT(DAYOFWEEK FROM DATE(ActivityDate)) = 7 THEN "Saturday"
+  END AS DayOfWeek
+FROM
+  FitBit.dailyActivity
+WHERE
+  TotalSteps > 0
+GROUP BY
+  Day,
+  DayOfWeek
+ORDER BY
+  Day ASC
+;
+
+### Steps VS Calories ###
+SELECT 
+  TotalSteps,
+  Calories
+FROM
+  FitBit.dailyActivity
+WHERE
+  TotalSteps > 0
+;
+
+###
+
+
+
+
 ### Min/Max/Average Steps and Sleep Grouped by Days
 SELECT
   EXTRACT(DAYOFWEEK FROM DATE(ActivityDate)) AS Day,
