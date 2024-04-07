@@ -26,6 +26,13 @@ FROM
   FitBit.sleepDay
 ;
 
+### Count Distinct ID from weightLogInfo ###
+SELECT
+  COUNT(DISTINCT(Id)) AS distinctId3
+FROM
+  FitBit.weightLogInfo
+;
+
 ### Min/Max/Average Steps and Sleep Grouped by Days
 SELECT
   EXTRACT(DAYOFWEEK FROM DATE(ActivityDate)) AS Day,
