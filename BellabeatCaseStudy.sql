@@ -59,6 +59,15 @@ ORDER BY
   Day ASC
 ;
 
+### Average Steps a Day ###
+SELECT
+  AVG(TotalSteps) As AvgSteps
+FROM
+  FitBit.dailyActivity
+WHERE
+  TotalSteps > 0
+;
+
 ### Steps VS Calories ###
 SELECT 
   TotalSteps,
@@ -69,12 +78,79 @@ WHERE
   TotalSteps > 0
 ;
 
-###
+### Sedentary Minutes VS Calories ###
+SELECT 
+  SedentaryMinutes,
+  Calories
+FROM
+  FitBit.dailyActivity
+WHERE
+  TotalSteps > 0
+;
 
+### Lightly Active Minutes VS Calories ###
+SELECT 
+  LightlyActiveMinutes,
+  Calories
+FROM
+  FitBit.dailyActivity
+WHERE
+  TotalSteps > 0
+;
 
+### Fairly Active Minutes VS Calories ###
+SELECT 
+  FairlyActiveMinutes,
+  Calories
+FROM
+  FitBit.dailyActivity
+WHERE
+  TotalSteps > 0
+;
 
+### Veryt Active Minutes VS Calories ###
+SELECT 
+  VeryActiveMinutes,
+  Calories
+FROM
+  FitBit.dailyActivity
+WHERE
+  TotalSteps > 0
+;
 
-### Min/Max/Average Steps and Sleep Grouped by Days
+### Count Distinct ID after Inner Join dailyActivty and sleepDay ###
+SELECT
+  COUNT(DISTINCT(dailyActivity.Id)) AS distinctId1,
+  COUNT(DISTINCT(sleepDay.Id)) AS distinctId2
+FROM
+  FitBit.dailyActivity AS dailyActivity
+INNER JOIN
+  FitBit.sleepDay AS sleepDay
+ON
+  dailyActivity.Id = sleepDay.Id
+  AND dailyActivity.ActivityDate = sleepDay.SleepDay
+WHERE
+  TotalSteps > 0
+;
+
+### Distinct Dates after Inner Join dailyActivity and sleepDay ###
+SELECT
+  COUNT(DISTINCT(dailyActivity.ActivityDate)) AS distinctDate1,
+  COUNT(DISTINCT(sleepDay.SleepDay)) AS distinctDate2
+FROM
+  FitBit.dailyActivity AS dailyActivity
+INNER JOIN
+  FitBit.sleepDay AS sleepDay
+ON
+  dailyActivity.Id = sleepDay.Id
+  AND dailyActivity.ActivityDate = sleepDay.SleepDay
+WHERE
+  TotalSteps > 0
+GROUP BY
+  dailyActivity.Id
+;
+
+### Min/Max/Average Steps/Sleep Grouped by Days after Inner Join dailyActivity and sleepDay ###
 SELECT
   EXTRACT(DAYOFWEEK FROM DATE(ActivityDate)) AS Day,
   MIN(TotalSteps) AS MinSteps,
@@ -108,4 +184,16 @@ ORDER BY
   Day ASC
 ;
 
+### Average Sleep after Inner Join dailyActivity and sleepDay ###
+SELECT
+  AVG(TotalMinutesAsleep) AS AvgSleep
+FROM
+  FitBit.dailyActivity AS dailyActivity
+INNER JOIN
+  FitBit.sleepDay AS sleepDay
+ON
+  dailyActivity.Id = sleepDay.Id
+  AND dailyActivity.ActivityDate = sleepDay.SleepDay
+WHERE
+  TotalSteps > 0
 
