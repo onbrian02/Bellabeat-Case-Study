@@ -150,12 +150,9 @@ GROUP BY
   dailyActivity.Id
 ;
 
-### Min/Max/Average Steps/Sleep Grouped by Days after Inner Join dailyActivity and sleepDay ###
+### Min/Max/Average Sleep Grouped by Days after Inner Join dailyActivity and sleepDay ###
 SELECT
   EXTRACT(DAYOFWEEK FROM DATE(ActivityDate)) AS Day,
-  MIN(TotalSteps) AS MinSteps,
-  MAX(TotalSteps) AS MaxSteps,
-  AVG(TotalSteps) As AvgSteps,
   MIN(TotalMinutesAsleep) AS MinSleep,
   MAX(TotalMinutesAsleep) AS MaxSleep,
   AVG(TotalMinutesAsleep) AS AvgSleep,
@@ -196,4 +193,42 @@ ON
   AND dailyActivity.ActivityDate = sleepDay.SleepDay
 WHERE
   TotalSteps > 0
+;
+
+### Total Steps and Total Time Asleep per Day ###
+SELECT
+  dailyActivity.Id,
+  ActivityDate,
+  TotalSteps,
+  TotalMinutesAsleep
+FROM
+  FitBit.dailyActivity AS dailyActivity
+INNER JOIN
+  FitBit.sleepDay AS sleepDay
+ON
+  dailyActivity.Id = sleepDay.Id
+  AND dailyActivity.ActivityDate = sleepDay.SleepDay
+WHERE
+  TotalSteps > 0
+;
+
+### Total Steps and Time to Fall Asleep ###
+SELECT
+  dailyActivity.TotalSteps,
+  sleepDay.TotalTimeInBed - sleepDay.TotalMinutesAsleep AS TimeFallAsleep
+FROM
+  FitBit.dailyActivity AS dailyActivity
+INNER JOIN
+  FitBit.sleepDay AS sleepDay
+ON
+  dailyActivity.Id = sleepDay.Id
+  AND dailyActivity.ActivityDate = sleepDay.SleepDay
+WHERE
+  TotalSteps > 0
+;
+
+
+
+
+
 
