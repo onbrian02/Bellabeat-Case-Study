@@ -223,7 +223,8 @@ WHERE
 ### Sedentary Minutes and Total Time Asleep ###
 SELECT
   dailyActivity.SedentaryMinutes,
-  sleepDay.TotalMinutesAsleep
+  sleepDay.TotalMinutesAsleep,
+  dailyActivity.SedentaryMinutes + dailyActivity.LightlyActiveMinutes + dailyActivity.FairlyActiveMinutes + dailyActivity.VeryActiveMinutes AS TotalActiveMinutes
 FROM
   FitBit.dailyActivity AS dailyActivity
 INNER JOIN
@@ -238,7 +239,8 @@ WHERE
 ### Lightly Active Minutes and Total Time Asleep ###
 SELECT
 dailyActivity.LightlyActiveMinutes,
-  sleepDay.TotalMinutesAsleep
+  sleepDay.TotalMinutesAsleep,
+  dailyActivity.SedentaryMinutes + dailyActivity.LightlyActiveMinutes + dailyActivity.FairlyActiveMinutes + dailyActivity.VeryActiveMinutes AS TotalActiveMinutes
 FROM
   FitBit.dailyActivity AS dailyActivity
 INNER JOIN
@@ -253,7 +255,8 @@ WHERE
 ### Fairly Active Minutes and Total Time Asleep ###
 SELECT
   dailyActivity.FairlyActiveMinutes,
-  sleepDay.TotalMinutesAsleep
+  sleepDay.TotalMinutesAsleep,
+  dailyActivity.SedentaryMinutes + dailyActivity.LightlyActiveMinutes + dailyActivity.FairlyActiveMinutes + dailyActivity.VeryActiveMinutes AS TotalActiveMinutes
 FROM
   FitBit.dailyActivity AS dailyActivity
 INNER JOIN
@@ -269,7 +272,8 @@ WHERE
 ### Very Active Minutes and Total Time Asleep ###
 SELECT
   dailyActivity.VeryActiveMinutes,
-  sleepDay.TotalTimeInBed - sleepDay.TotalMinutesAsleep AS TimeFallAsleep
+  sleepDay.TotalTimeInBed - sleepDay.TotalMinutesAsleep AS TimeFallAsleep,
+  dailyActivity.SedentaryMinutes + dailyActivity.LightlyActiveMinutes + dailyActivity.FairlyActiveMinutes + dailyActivity.VeryActiveMinutes AS TotalActiveMinutes
 FROM
   FitBit.dailyActivity AS dailyActivity
 INNER JOIN
@@ -281,12 +285,6 @@ WHERE
   TotalSteps > 0 AND
   VeryActiveMinutes > 0
 ;
-
-
-
-
-
-
 
 ### Total Steps and Time to Fall Asleep ###
 SELECT
@@ -306,7 +304,8 @@ WHERE
 ### Sedentary Minutes and Time to Fall Asleep ###
 SELECT
   dailyActivity.SedentaryMinutes,
-  sleepDay.TotalTimeInBed - sleepDay.TotalMinutesAsleep AS TimeFallAsleep
+  sleepDay.TotalTimeInBed - sleepDay.TotalMinutesAsleep AS TimeFallAsleep,
+  dailyActivity.SedentaryMinutes + dailyActivity.LightlyActiveMinutes + dailyActivity.FairlyActiveMinutes + dailyActivity.VeryActiveMinutes AS TotalActiveMinutes
 FROM
   FitBit.dailyActivity AS dailyActivity
 INNER JOIN
@@ -321,7 +320,8 @@ WHERE
 ### Lightly Active Minutes and Time to Fall Asleep ###
 SELECT
   dailyActivity.LightlyActiveMinutes,
-  sleepDay.TotalTimeInBed - sleepDay.TotalMinutesAsleep AS TimeFallAsleep
+  sleepDay.TotalTimeInBed - sleepDay.TotalMinutesAsleep AS TimeFallAsleep.
+  dailyActivity.SedentaryMinutes + dailyActivity.LightlyActiveMinutes + dailyActivity.FairlyActiveMinutes + dailyActivity.VeryActiveMinutes AS TotalActiveMinutes
 FROM
   FitBit.dailyActivity AS dailyActivity
 INNER JOIN
@@ -336,7 +336,8 @@ WHERE
 ### Fairly Active Minutes and Time to Fall Asleep ###
 SELECT
   dailyActivity.FairlyActiveMinutes,
-  sleepDay.TotalTimeInBed - sleepDay.TotalMinutesAsleep AS TimeFallAsleep
+  sleepDay.TotalTimeInBed - sleepDay.TotalMinutesAsleep AS TimeFallAsleep.
+  dailyActivity.SedentaryMinutes + dailyActivity.LightlyActiveMinutes + dailyActivity.FairlyActiveMinutes + dailyActivity.VeryActiveMinutes AS TotalActiveMinutes
 FROM
   FitBit.dailyActivity AS dailyActivity
 INNER JOIN
@@ -351,7 +352,8 @@ WHERE
 ### Very Active Minutes and Time to Fall Asleep ###
 SELECT
   dailyActivity.VeryActiveMinutes,
-  sleepDay.TotalTimeInBed - sleepDay.TotalMinutesAsleep AS TimeFallAsleep
+  sleepDay.TotalTimeInBed - sleepDay.TotalMinutesAsleep AS TimeFallAsleep.
+  dailyActivity.SedentaryMinutes + dailyActivity.LightlyActiveMinutes + dailyActivity.FairlyActiveMinutes + dailyActivity.VeryActiveMinutes AS TotalActiveMinutes
 FROM
   FitBit.dailyActivity AS dailyActivity
 INNER JOIN
