@@ -364,6 +364,21 @@ ON
 WHERE
   TotalSteps > 0
 
+### Count Distinct ID from weightLogInfo ###
+SELECT
+  COUNT(DISTINCT(Id)) AS distinctId
+FROM
+  FitBit.weightLogInfo
+;
 
+### Count Distinct ID from weightLogInfo Grouped By Date ###
+SELECT
+  Date,
+  COUNT(DISTINCT(Id)) AS distinctId
+FROM
+  FitBit.weightLogInfo
+GROUP BY
+  Date
+;
 
 
